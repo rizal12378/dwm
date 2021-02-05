@@ -6,7 +6,7 @@
 //static const unsigned int snap      = 32;       /* snap pixel */
 //static const int showbar            = 1;        /* 0 means no bar */
 //static const int topbar             = 1;        /* 0 means bottom bar */
-static unsigned int borderpx  = 1;        /* border pixel of windows */
+static unsigned int borderpx  = 5;        /* border pixel of windows */
 static unsigned int snap      = 5;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
