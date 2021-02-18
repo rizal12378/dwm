@@ -2,26 +2,27 @@
 #include "fibonacci.c"
 
 /* appearance */
-//static const unsigned int borderpx  = 1;        /* border pixel of windows */
+//static const unsigned int borderpx  = 5;        /* border pixel of windows */
 //static const unsigned int snap      = 32;       /* snap pixel */
 //static const int showbar            = 1;        /* 0 means no bar */
 //static const int topbar             = 1;        /* 0 means bottom bar */
-static unsigned int borderpx  = 5;        /* border pixel of windows */
+static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 5;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-static const char *alttrayname      = "tray";    /* Polybar tray instance name */
+static const char *alttrayname      = "yea";    /* Polybar tray instance name */
 static const char *altbarcmd        = "$HOME/bar.sh"; /* Alternate bar launch command */
-static const char *fonts[]          = { "monospace:size=10", "fontawesome:size=12" };
-static const char dmenufont[]       = "monospace:size=10";
-static char normbgcolor[]           = "#222222";
+static const char *fonts[]          = { "monospace:size=11", "fontawesome:size=12" };
+static const char dmenufont[]       = "Liberation:size=11";
+static char normbgcolor[]           = "#757575";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#005577";
-static char selbgcolor[]            = "#005577";
+static char selbordercolor[]        = "#ededed";
+static char selbgcolor[]            = "#ededed";
+static char white[]		    = "#ffffff";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -82,15 +83,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray2, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", white, "-sf", normbgcolor, NULL };
 static const char *termcmd[]  = { "konsole", NULL };
 static const char *nautilus[] = { "nautilus", NULL};
 static const char *chromium[] = { "chromium", NULL};
 static const char *scrotRect[] = {"scrot", "-s", NULL};
 static const char *scrotFull[] = {"scrot", "-D", NULL};
 static const char *scrotWindow[] = {"scrot", "-u", NULL};
-static const char *wifi[]     = {"nm-connection-editor", NULL};
+static const char *increaseBrightness[] = {"brightnessctl", "s", "+1$", ">", "/dev/null"};
+static const char *decreaseBrightness[] = {"brightnessctl", "s", "1%-", ">", "/dev/null"};
 
 /*
  * Xresources preferences to load at startup
@@ -121,7 +123,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_a, spawn,               {.v = termcmd } },
     {SI_USER,                     XK_Print, spawn, {.v = scrotFull} },
     {MODKEY|ShiftMask,            XK_Return, spawn, {.v = scrotWindow} },
-    {MODKEY,  XK_w, spawn, {.v = wifi} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -152,6 +153,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ControlMask,			XK_hyphen, spawn, {.v = decreaseBrightness}},
+	{ControlMask,			XK_equal, spawn, {.v = increaseBrightness}},
 };
 
 /* button definitions */
