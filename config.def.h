@@ -10,6 +10,7 @@ static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 5;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
+static const char statussep         = ';';      /* separator between status bars, 1 means on, 0 means off */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const char *alttrayname      = "yea";    /* Polybar tray instance name */
@@ -55,9 +56,9 @@ static const Rule rules[] = {
 //static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 //static int nmaster     = 1;    /* number of clients in master area */
 //static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static int nmaster     = 1;    /* number of clients in master area */
-static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -89,9 +90,9 @@ static const char *termcmd[]  = { "konsole", NULL };
 static const char *nautilus[] = { "nautilus", NULL};
 static const char *chromium[] = { "chromium", NULL};
 static const char *scrotRect[] = {"scrot", "-s", NULL};
-static const char *scrotFull[] = {"scrot", "-D", NULL};
+static const char *scrotFull[] = {"scrot", NULL};
 static const char *scrotWindow[] = {"scrot", "-u", NULL};
-static const char *increaseBrightness[] = {"brightnessctl", "s", "+1$", ">", "/dev/null"};
+static const char *increaseBrightness[] = {"brightnessctl", "s", "+1%", ">", "/dev/null"};
 static const char *decreaseBrightness[] = {"brightnessctl", "s", "1%-", ">", "/dev/null"};
 
 /*
@@ -153,8 +154,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ControlMask,			XK_hyphen, spawn, {.v = decreaseBrightness}},
-	{ControlMask,			XK_equal, spawn, {.v = increaseBrightness}},
+	{MODKEY,			XK_equal, spawn, {.v = decreaseBrightness}},
+	{MODKEY,			XK_BackSpace, spawn, {.v = increaseBrightness}},
 };
 
 /* button definitions */
