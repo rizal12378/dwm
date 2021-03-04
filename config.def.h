@@ -8,21 +8,22 @@
 //static const int topbar             = 1;        /* 0 means bottom bar */
 static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 5;       /* snap pixel */
+static const unsigned int gappx     = 6;        /* gaps between windows */
 static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
-static const char statussep         = ';';      /* separator between status bars, 1 means on, 0 means off */
+static int topbar             = 0;        /* 0 means bottom bar */
+static const char statussep         = 1;      /* separator between status bars, 1 means on, 0 means off */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const char *alttrayname      = "yea";    /* Polybar tray instance name */
 static const char *altbarcmd        = "$HOME/bar.sh"; /* Alternate bar launch command */
 static const char *fonts[]          = { "monospace:size=11", "fontawesome:size=12" };
 static const char dmenufont[]       = "Liberation:size=11";
-static char normbgcolor[]           = "#757575";
+static char normbgcolor[]           = "#6ddccf";
 static char normbordercolor[]       = "#444444";
-static char normfgcolor[]           = "#bbbbbb";
-static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#ededed";
-static char selbgcolor[]            = "#ededed";
+static char normfgcolor[]           = "#000000";
+static char selfgcolor[]            = "#ffefa1";
+static char selbordercolor[]        = "#709fb0";
+static char selbgcolor[]            = "#a7c5eb";
 static char white[]		    = "#ffffff";
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -35,13 +36,13 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	/*
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	
+	/*[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }, */
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "" };
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -94,6 +95,7 @@ static const char *scrotFull[] = {"scrot", NULL};
 static const char *scrotWindow[] = {"scrot", "-u", NULL};
 static const char *increaseBrightness[] = {"brightnessctl", "s", "+1%", ">", "/dev/null"};
 static const char *decreaseBrightness[] = {"brightnessctl", "s", "1%-", ">", "/dev/null"};
+static const char *blackout[] = {"brightnessctl", "s", "0", ">", "/dev/null"};
 
 /*
  * Xresources preferences to load at startup
@@ -139,9 +141,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
-  { MODKEY,                       XK_r,      setlayout,      {.v = &layouts[5]} },
+  	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[6]} },
-  { MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -153,9 +155,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	TAGKEYS(			XK_5,			   4)
+	TAGKEYS(			XK_6,			   5)
+	{MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{MODKEY,			XK_equal, spawn, {.v = decreaseBrightness}},
 	{MODKEY,			XK_BackSpace, spawn, {.v = increaseBrightness}},
+	{MODKEY,			XK_backslash, spawn, {.v = blackout}},
 };
 
 /* button definitions */
